@@ -46,7 +46,7 @@ decorator==4.4.0
 defusedxml==0.6.0
 diff-match-patch==20181111
 distributed==2.5.2
-Django==3.0.4
+Django==3.0.7
 django-bootstrap-form==3.4
 django-filter==2.3.0
 django-import-export==2.2.0
