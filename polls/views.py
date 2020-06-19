@@ -156,6 +156,8 @@ def output(request):
 		data['cpu'] = 'cpu'
 		data['screen'] = 'screen'
 		data['ram'] = 'ram'
+		data['ssd'] = 'ssd'
+		data['hhd'] = 'hhd'
 		data['Type'] = 'type'
 		data['model'] = 'model'
 		data['os'] = 'os'
@@ -166,6 +168,7 @@ def output(request):
 		data['upc'] = 'upc'
 		data['sku'] = 'sku'
 		data['office'] = 'office'
+		data['note'] = 'note'
 		form = OutputForm(data)
 		# print(data['price'])
 
@@ -264,6 +267,8 @@ def output(request):
 			Output.objects.filter(asin = asin[i]).update(cpu = request.POST.getlist('cpu')[i])
 			Output.objects.filter(asin = asin[i]).update(screen = request.POST.getlist('screen')[i])
 			Output.objects.filter(asin = asin[i]).update(ram = request.POST.getlist('ram')[i])
+			Output.objects.filter(asin = asin[i]).update(ssd = request.POST.getlist('ssd')[i])
+			Output.objects.filter(asin = asin[i]).update(hhd = request.POST.getlist('hhd')[i])
 			Output.objects.filter(asin = asin[i]).update(Type = request.POST.getlist('type')[i])
 			Output.objects.filter(asin = asin[i]).update(model = request.POST.getlist('model')[i])
 			Output.objects.filter(asin = asin[i]).update(os = request.POST.getlist('os')[i])
@@ -274,6 +279,7 @@ def output(request):
 			Output.objects.filter(asin = asin[i]).update(upc = request.POST.getlist('upc')[i])
 			Output.objects.filter(asin = asin[i]).update(sku = request.POST.getlist('sku')[i])
 			Output.objects.filter(asin = asin[i]).update(office = request.POST.getlist('office')[i])
+			Output.objects.filter(asin = asin[i]).update(note = request.POST.getlist('note')[i])
 
 			i += 1
 		

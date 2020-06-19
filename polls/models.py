@@ -12,6 +12,8 @@ class Output(models.Model):
 	cpu = models.CharField(max_length=200, blank=True, null=True)
 	screen = models.CharField(max_length=200, blank=True, null=True)
 	ram = models.CharField(max_length=200, blank=True, null=True)
+	ssd = models.CharField(max_length=200, blank=True, null=True)
+	hhd = models.CharField(max_length=200, blank=True, null=True)
 	Type = models.CharField(max_length=200, blank=True, null=True)
 	model = models.CharField(max_length=200, blank=True, null=True)
 	os = models.CharField(max_length=200, blank=True, null=True)
@@ -22,3 +24,4 @@ class Output(models.Model):
 	upc = models.CharField(max_length=200, blank=True, null=True)
 	sku = models.CharField(max_length=200, blank=True, null=True)
 	office = models.CharField(max_length=200, blank=True, null=True)
+	note = models.CharField(max_length=200, blank=True, null=True)

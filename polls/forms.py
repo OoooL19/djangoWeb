@@ -12,6 +12,8 @@ class OutputForm(forms.Form):
 	date = forms.CharField()
 	screen = forms.CharField()
 	ram = forms.CharField()
+	ssd = forms.CharField()
+	hhd = forms.CharField()
 	Type = forms.CharField()
 	model = forms.CharField()
 	os = forms.CharField()
@@ -22,3 +24,4 @@ class OutputForm(forms.Form):
 	upc = forms.CharField()
 	sku = forms.CharField()
 	office = forms.CharField()
+	note = forms.CharField()
