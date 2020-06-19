@@ -1,0 +1,356 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link rel="stylesheet" href="{% static 'css/index.css' %}">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<title>Amazon</title>
+</head>
+<body style="background: white">
+	<!-- <img src="{% static 'images/download.jpeg' %}"> -->
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	{% block js %}
+	<script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+	{% endblock js %}
+	<!-- <h1 class="text-primary test-right">Hello, world!</h1> -->
+
+	<!-- <button onclick="location.href = '{% url 'home' %}'">execute</button> -->
+</br>
+<h3>Filter</h3>
+<form method="GET" action=".">
+	<div class="form-row">
+		<div class="form-group col-12">
+			<div class="input-group">
+				<input class="form-control py-2 border-right-0 border" type="search" name="brand_name" placeholder="Brand..." />
+				<span class="input-group-append">
+					<div class="input-group-text bg-transparent">
+						<i class="fa fa-search"></i>
+					</div>
+				</span>
+			</div>
+		</div>        
+	</div>
+	<div class="form-row">
+		<div class="form-group col-12">
+			<div class="input-group">
+				<input class="form-control py-2 border-right-0 border" type="search" name="cpu_exact" placeholder="CPU exact..." />
+				<span class="input-group-append">
+					<div class="input-group-text bg-transparent">
+						<i class="fa fa-search"></i>
+					</div>
+				</span>
+			</div>
+		</div>        
+	</div>
+	<div class="form-row">
+		<div class="form-group col-12">
+			<div class="input-group">
+				<input class="form-control py-2 border-right-0 border" type="search" name="screen_filter" placeholder="Screen size" />
+				<span class="input-group-append">
+					<div class="input-group-text bg-transparent">
+						<i class="fa fa-search"></i>
+					</div>
+				</span>
+			</div>
+		</div>        
+	</div>
+	<div class="form-row">
+		<div class="form-group col-12">
+			<div class="input-group">
+				<input class="form-control py-2 border-right-0 border" type="search" name="upc_filter" placeholder="UPC" />
+				<span class="input-group-append">
+					<div class="input-group-text bg-transparent">
+						<i class="fa fa-search"></i>
+					</div>
+				</span>
+			</div>
+		</div>        
+	</div>
+	<div class="form-row">
+		<div class="form-group col-md-2 col-lg-2">
+			<label for="viewCountMin">Minimum rank</label>
+			<input type="number" min=0 class="form-control" id="viewCountMin" placeholder="0" name="view_count_min">
+		</div>
+		<div class="form-group col-md-2 col-lg-2">
+			<label for="viewCountMax">Maximum rank</label>
+			<input type="number" min=0 class="form-control" id="viewCountMax" placeholder="10000" name="view_count_max">
+		</div>
+		<div class="form-group col-md-2 col-lg-2">
+			<label for="viewCountMin">Minimum price</label>
+			<input type="number" min=0 class="form-control" id="viewCountMin" placeholder="0" name="view_price_min">
+		</div>
+		<div class="form-group col-md-2 col-lg-2">
+			<label for="viewCountMax">Maximum price</label>
+			<input type="number" min=0 class="form-control" id="viewCountMax" placeholder="10000" name="view_price_max">
+		</div>
+		<div class="form-group col-md-2 col-lg-2">
+			<label for="publishDateMin">Publish date minimum</label>
+			<input type="date" class="form-control" id="publishDateMin" name="date_min">
+		</div>
+		<div class="form-group col-md-2 col-lg-2">
+			<label for="publishDateMax">Publish date maximum</label>
+			<input type="date" class="form-control" id="publishDateMax" name="date_max">
+		</div>
+	</div>
+	<button type="submit" name="s_bt" class="btn btn-primary">Search</button>
+	<div class="container">
+		{% if messages %}
+		{% for message in messages %}
+		<div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{message.tags}}{% endif %}" role="alert">
+			{{ message }}
+		</div>
+		{% endfor %}
+		{% endif %}
+	</div>
+</form>
+<br>
+<form action="{% url 'script' %}" method="POST" enctype="multipart/form-data" >
+	{% csrf_token %}
+	<div class="form-group w-75">
+		<input type="text" name="url" id="url" class="form-control" placeholder="Amazon link">
+	</br>
+	<button type="submit" class="btn btn-success btn-lg btn-block" name="url_bt">submit</button>
+	<br>
+	<input type="number" name="range_f" id="rangg_f" placeholder="from"> <input type="number" name="range_t" id="range_t" placeholder="to"> <button type="submit" class="btn btn-primary btn-sm" name="refresh_bt">Refresh</button>
+</div>
+</br>
+
+{% if alldata %}
+
+
+<table class="table table-striped table-sm" id="">
+	<thead class="thead-light">
+		<tr>
+			<!-- <th>ID</th> -->
+			<th class="sticky-top">Price <button type="submit" class="btn btn-outline-dark" name="price_sort"><i class="fa fa-fw fa-sort" ></i></button></th>
+			<th class="sticky-top">Asin</th>
+			<th class="sticky-top">Rank <button type="submit" class="btn btn-outline-dark" name="rank_sort"><i class="fa fa-fw fa-sort" ></i></button></th>
+			<th class="sticky-top">Date <button type="submit" class="btn btn-outline-dark" name="date_sort"><i class="fa fa-fw fa-sort" ></i></button></th>
+			<th class="sticky-top"><a data-toggle="collapse" href="#collapseList" role="button" aria-expanded="false" aria-controls="collapseList">List</a> </th>
+			<th class="sticky-top"><a data-toggle="collapse" href="#collapseBrand" role="button" aria-expanded="false" aria-controls="collapsebrand">Brand</a> </th>
+			<th class="sticky-top"><a data-toggle="collapse" href="#collapseCpu" role="button" aria-expanded="true" aria-controls="collapseCpu">
+				CPU
+			</a></th>
+			<th class="sticky-top"><a data-toggle="collapse" href="#collapseScreen" role="button" aria-expanded="true" aria-controls="collapsescreen">
+				Display
+			</a></th>
+			<th class="sticky-top"><a data-toggle="collapse" href="#collapseRam" role="button" aria-expanded="true" aria-controls="collapseRam">
+				Ram
+			</a></th>
+			<th class="sticky-top"><a data-toggle="collapse" href="#collapseType" role="button" aria-expanded="true" aria-controls="collapseType">
+				Type
+			</a></th>
+			<th class="sticky-top"><a data-toggle="collapse" href="#collapseModel" role="button" aria-expanded="true" aria-controls="collapseModel">
+				Model
+			</a></th>
+			<th class="sticky-top"><a data-toggle="collapse" href="#collapseOS" role="button" aria-expanded="true" aria-controls="collapseOS">
+				OS
+			</a></th>
+			<th class="sticky-top"><a data-toggle="collapse" href="#collapseDVD" role="button" aria-expanded="true" aria-controls="collapseDVD">
+				DVD
+			</a></th>
+			<th class="sticky-top"><a data-toggle="collapse" href="#collapseKey" role="button" aria-expanded="true" aria-controls="collapseKey">
+				Keyboard
+			</a></th>
+			<th class="sticky-top"><a data-toggle="collapse" href="#collapseSecurity" role="button" aria-expanded="true" aria-controls="collapseSecurity">
+				Security
+			</a></th>
+			<th class="sticky-top"><a data-toggle="collapse" href="#collapseVideo" role="button" aria-expanded="true" aria-controls="collapseVideo">
+				Video Card
+			</a></th>
+			<th class="sticky-top"><a data-toggle="collapse" href="#collapseUPC" role="button" aria-expanded="true" aria-controls="collapseUPC">
+				UPC
+			</a></th>
+			<th class="sticky-top"><a data-toggle="collapse" href="#collapseSKU" role="button" aria-expanded="true" aria-controls="collapseSKU">
+				SKU
+			</a></th>
+			<th class="sticky-top"><a data-toggle="collapse" href="#collapseOffice" role="button" aria-expanded="true" aria-controls="collapseOffice">
+				Office365
+			</a></th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for data in alldata %}
+		<tr>
+			<!-- <td>{{data.pk}}</td> -->
+			<td>{{ data.price }}</td>
+			<td id="asin"> <a href="{{ data.link }}">{{ data.asin }}</a> </td>
+			<td>{{ data.rank }}</td>
+			<td>{{data.date}}</td>
+			<td>
+				<div class="md-form form-sm input-group collapse show" id="collapseList">
+					<!-- <input type="text" name="brand" id="brand" value="{{data.brand}}"> -->
+					<!-- <input type="text" name="type" id="type" class="form-control" value="{{data.Type}}"> -->
+					<select class="custom-select form-control" name="list" id="list">
+						<option selected>{{data.List}}</option>
+						<option value="Bundle">Bundle</option>
+						<option value="Renew">Renew</option>
+						<option value="Restricted">Restricted</option>
+						<!-- <button type="submit">Update</button> -->
+					</div>
+				</td>
+				<td>	
+					<div class="md-form form-sm collapse show" id="collapseBrand">
+						<!-- <input type="text" name="brand" id="brand" value="{{data.brand}}"> -->
+						<input type="text" name="brand" id="brand" class="form-control" value="{{data.brand}}">
+						<!-- <button type="submit">Update</button> -->
+					</div>
+				</td>
+				<td>
+
+					<div class="md-form form-sm collapse show" id="collapseCpu">
+						<!-- <input type="text" name="brand" id="brand" value="{{data.brand}}"> -->
+						<input type="text" name="cpu" id="cpu" class="form-control" value="{{data.cpu}}">
+						<!-- <button type="submit">Update</button> -->
+
+					</div>
+				</td>
+				<td>
+					<div class="md-form form-sm collapse show" id="collapseScreen">
+						<!-- <input type="text" name="brand" id="brand" value="{{data.brand}}"> -->
+						<input type="text" name="screen" id="screen" class="form-control" value="{{data.screen}}">
+						<!-- <button type="submit">Update</button> -->
+					</div>
+				</td>
+				<td>
+					<div class="md-form form-sm collapse show" id="collapseRam">
+						<!-- <input type="text" name="brand" id="brand" value="{{data.brand}}"> -->
+						<input type="text" name="ram" id="ram" class="form-control" value="{{data.ram}}">
+						<!-- <button type="submit">Update</button> -->
+					</div>
+				</td>
+				<td>
+					<div class="md-form form-sm input-group collapse show" id="collapseType">
+						<!-- <input type="text" name="brand" id="brand" value="{{data.brand}}"> -->
+						<!-- <input type="text" name="type" id="type" class="form-control" value="{{data.Type}}"> -->
+						<select class="custom-select form-control" name="type" id="type">
+							<option selected>{{data.Type}}</option>
+							<option value="Laptop">Laptop</option>
+							<option value="Chromebook">Chromebook</option>
+							<option value="Laptop 2in1">Laptop 2in1</option>
+							<option value="Desktop">Desktop</option>
+							<option value="Desktop AIO">Desktop AIO</option>
+							<option value="Monitor">Monitor</option>
+							<!-- <button type="submit">Update</button> -->
+						</div>
+					</td>
+					<td>
+						<div class="md-form form-sm collapse show" id="collapseModel">
+							<!-- <input type="text" name="brand" id="brand" value="{{data.brand}}"> -->
+							<input type="text" name="model" id="model" class="form-control" value="{{data.model}}">
+							<!-- <button type="submit">Update</button> -->
+						</div>
+					</td>
+					<td>
+						<div class="md-form form-sm collapse show" id="collapseOS">
+							<!-- <input type="text" name="brand" id="brand" value="{{data.brand}}"> -->
+							<input type="text" name="os" id="os" class="form-control" value="{{data.os}}">
+							<!-- <button type="submit">Update</button> -->
+						</div>
+					</td>
+					<td>
+						<div class="md-form form-sm collapse show" id="collapseDVD">
+							<!-- <input type="text" name="brand" id="brand" value="{{data.brand}}"> -->
+							<input type="text" name="DVD" id="DVD" class="form-control" value="{{data.DVD}}">
+							<!-- <button type="submit">Update</button> -->
+						</div>
+					</td>
+					<td>
+						<div class="md-form form-sm input-group collapse show" id="collapseKey">
+							<!-- <input type="text" name="brand" id="brand" value="{{data.brand}}"> -->
+							<!-- <input type="text" name="type" id="type" class="form-control" value="{{data.Type}}"> -->
+							<select class="custom-select form-control" name="keyboard" id="keyboard">
+								<option selected>{{data.keyboard}}</option>
+								<option value="Backlit">Backlit</option>
+								<!-- <button type="submit">Update</button> -->
+							</div>
+						</td>
+						<td>
+							<div class="md-form form-sm input-group collapse show" id="collapseSecurity">
+								<!-- <input type="text" name="brand" id="brand" value="{{data.brand}}"> -->
+								<!-- <input type="text" name="type" id="type" class="form-control" value="{{data.Type}}"> -->
+								<select class="custom-select form-control" name="security" id="security">
+									<option selected>{{data.security}}</option>
+									<option value="FR">FR</option>
+									<!-- <button type="submit">Update</button> -->
+								</div>
+							</td>
+							<td>
+								<div class="md-form form-sm collapse show" id="collapseVideo">
+									<!-- <input type="text" name="brand" id="brand" value="{{data.brand}}"> -->
+									<input type="text" name="vc" id="vc" class="form-control" value="{{data.vc}}">
+									<!-- <button type="submit">Update</button> -->
+								</div>
+							</td>
+							<td>
+								<div class="md-form form-sm collapse show" id="collapseUPC">
+									<!-- <input type="text" name="brand" id="brand" value="{{data.brand}}"> -->
+									<input type="text" name="upc" id="upc" class="form-control" value="{{data.upc}}">
+									<!-- <button type="submit">Update</button> -->
+								</div>
+							</td>
+							<td>
+								<div class="md-form form-sm collapse show" id="collapseSKU">
+									<!-- <input type="text" name="brand" id="brand" value="{{data.brand}}"> -->
+									<input type="text" name="sku" id="sku" class="form-control" value="{{data.sku}}">
+									<!-- <button type="submit">Update</button> -->
+								</div>
+							</td>
+							<td>
+								<div class="md-form form-sm collapse show" id="collapseOffice">
+									<!-- <input type="text" name="brand" id="brand" value="{{data.brand}}"> -->
+									<input type="text" name="office" id="office" class="form-control" value="{{data.office}}">
+									<!-- <button type="submit">Update</button> -->
+								</div>
+							</td>
+							<td><button name="update_bt" type="submit" class="btn btn-info">Update</button></td>
+						</tr>
+						{% endfor %}
+
+					</tbody>
+				</table>
+
+				{% endif %}
+
+			</form>
+
+
+
+
+			<div>{% block content %}
+			{% endblock %}</div>
+		</body>
+		</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

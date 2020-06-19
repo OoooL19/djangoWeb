@@ -1,0 +1,41 @@
+# name:
+#     css: '#productTitle'
+#     type: Text
+price:
+    css: '#priceblock_ourprice'
+    type: Text
+# short_description:
+#     css: '#featurebullets_feature_div'
+#     type: Text
+# images:
+#     css: '.imgTagWrapper img'
+#     type: Attribute
+#     attribute: data-a-dynamic-image
+# rating:
+#     css: span.arp-rating-out-of-text
+#     type: Text
+# number_of_reviews:
+#     css: 'a.a-link-normal h2'
+#     type: Text
+# variants:
+#     css: 'form.a-section li'
+#     multiple: false
+#     type: Text
+            
+asin:
+    css: 'div.a-section div.a-section tr:nth-of-type(1) td.a-size-base'
+    type: Text
+
+# product_description:
+#     css: '#productDescription'
+#     type: Text
+rank:
+    css: 'table.a-keyvalue td > span span:nth-of-type(2)'
+    type: Text
+
+# asin_num:
+#     css: '#prodDetails'
+#     type: Text
+# link_to_all_reviews:
+#     css: 'div.card-padding a.a-link-emphasis'
+#     type: Link
