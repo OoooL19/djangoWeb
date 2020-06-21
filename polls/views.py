@@ -6,7 +6,6 @@ from time import sleep
 import requests
 import yaml
 import re
-import time
 # Create your views here.
 from django.http import HttpResponse, JsonResponse
 from django.core.files.storage import FileSystemStorage
@@ -348,7 +347,6 @@ def output(request):
 				Output.objects.filter(asin = i.asin).update(price = data['price'].replace('$','').replace(',',''), asin = data['asin'], rank = None, link = data['link'], date = data['date'])
 			else:
 				Output.objects.filter(asin = i.asin).update(price = data['price'].replace('$','').replace(',',''), asin = data['asin'], rank = re.sub("[^0-9]", "", data['rank'].replace('#','').replace(',','')), link = data['link'], date = data['date'])
-			time.sleep(180)
 		return render(request, 'polls/base.html', {'alldata': alldata})
 	
 	
