@@ -1,9 +1,9 @@
 gunicorn==20.0.4
 psycopg2-binary==2.8.5
 alabaster==0.7.12
-anaconda-client==1.7.2
-anaconda-navigator==1.9.7
-anaconda-project==0.8.3
+# anaconda-client==1.7.2
+# anaconda-navigator==1.9.7
+# anaconda-project==0.8.3
 appnope==0.1.0
 appscript==1.0.1
 asgiref==3.2.3
