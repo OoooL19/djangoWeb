@@ -222,6 +222,7 @@ def output(request):
 	elif 'rank_sort' in request.POST:
 		
 		alldata = alldata.order_by('rank')
+		flag = request.session.get('flag')
 		flag = 'rank'
 		request.session['flag'] = flag
 		return render(request, 'polls/base.html', {'alldata': alldata})
@@ -229,6 +230,7 @@ def output(request):
 	elif 'date_sort' in request.POST:
 		
 		alldata = alldata.order_by('date')
+		flag = request.session.get('flag')
 		flag = 'date'
 		request.session['flag'] = flag
 		return render(request, 'polls/base.html', {'alldata': alldata})
