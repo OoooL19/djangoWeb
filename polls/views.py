@@ -237,31 +237,39 @@ def output(request):
 
 	if request.method == 'POST' and 'update_bt' in request.POST:
 		 
+		i = 0
+		asin = []
 		temp = request.session.get('temp')
 		flag = request.session.get('flag')
 		if flag == 'price':
 			alldata = Output.objects.all().order_by('-price')
-			request.session['flag'] = None
-		elif flag == 'rank':
-			alldata = Output.objects.all().order_by('rank')
-			request.session['flag'] = None
-		elif flag == 'date':
-			alldata = Output.objects.all().order_by('date')
-			request.session['flag'] = None
-		else:
-			alldata = Output.objects.all()
-		i = 0
-		asin = []
-		if temp != None:
-			for x in temp:
-				asin.append(x)
-				print(x)
-			request.session['temp'] = None
-		else:		
 			for j in alldata:
 				asin.append(j.asin)
 				print(j.asin)
-
+			
+		elif flag == 'rank':
+			alldata = Output.objects.all().order_by('rank')
+			for j in alldata:
+				asin.append(j.asin)
+				print(j.asin)
+			
+		elif flag == 'date':
+			alldata = Output.objects.all().order_by('date')
+			for j in alldata:
+				asin.append(j.asin)
+				print(j.asin)
+			
+		elif temp:
+			for x in temp:
+				asin.append(x)
+				print(x)
+			
+		else:
+			alldata = Output.objects.all()
+			for j in alldata:
+				asin.append(j.asin)
+				print(j.asin)
+		
 		
 		while i < len(request.POST.getlist('brand')):
 			Output.objects.filter(asin = asin[i]).update(List = request.POST.getlist('list')[i])
@@ -285,7 +293,8 @@ def output(request):
 
 			i += 1
 		
-		
+		request.session['flag'] = None	
+		request.session['temp'] = None
 		alldata = Output.objects.all()
 		return render(request, 'polls/base.html', {'alldata': alldata})
 		# # Output.objects.filter(brand = 'None').delete()
