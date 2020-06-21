@@ -252,7 +252,7 @@ def output(request):
 			alldata = Output.objects.all()
 		i = 0
 		asin = []
-		if temp:
+		if temp != None:
 			for x in temp:
 				asin.append(x)
 				print(x)
