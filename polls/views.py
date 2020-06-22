@@ -308,8 +308,9 @@ def output(request):
 
 		alldata = Output.objects.all()
 		for i in alldata:
+			urls = i.link
 			if i.price == None:
-				urls = i.link
+				
 				print(urls)
 				myDate = datetime.now()
 				formatedDate = myDate.strftime("%Y-%m-%d")
