@@ -308,7 +308,7 @@ def output(request):
 
 		alldata = Output.objects.all()
 		for i in alldata:
-			if i.price == None
+			if i.price == None:
 				urls = i.link
 				print(urls)
 				myDate = datetime.now()
