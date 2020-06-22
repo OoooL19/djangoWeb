@@ -8,12 +8,12 @@
 
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-	<link rel="stylesheet" href="{% static 'css/index.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
 	<title>AmazonBrownBox</title>
 </head>
-<body style="background: white">
+<body style="width: 200%">
 	<!-- <img src="{% static 'images/download.jpeg' %}"> -->
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -21,9 +21,9 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-	{% block js %}
-	<script type="text/javascript" src="{% static 'js/app.js' %}"></script>
-	{% endblock js %}
+	
+	<!-- <script type="text/javascript" src="{% static 'js/app.js' %}"></script> -->
+	
 	<!-- <h1 class="text-primary test-right">Hello, world!</h1> -->
 
 	<!-- <button onclick="location.href = '{% url 'home' %}'">execute</button> -->
@@ -129,8 +129,8 @@
 
 {% if alldata %}
 
-
-<table class="table table-striped table-sm" id="">
+<div class="table-responsive">
+<table class="table table-bordered" id="">
 	<thead class="thead-light">
 		<tr>
 			<!-- <th>ID</th> -->
@@ -188,6 +188,7 @@
 			<th class="sticky-top"><a data-toggle="collapse" href="#collapseNote" role="button" aria-expanded="true" aria-controls="collapseNote">
 				Note
 			</a></th>
+			<th>Update</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -351,12 +352,11 @@
 
 					</tbody>
 				</table>
+			</div>
 
 				{% endif %}
 
 			</form>
-
-
 
 
 			<div>{% block content %}

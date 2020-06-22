@@ -369,6 +369,8 @@ def output(request):
 		for i in alldata:
 			if i.asin == None:
 				Output.objects.filter(asin = i.asin).delete()
+		request.session['flag'] = None	
+		request.session['temp'] = None
 		return render(request, 'polls/base.html', {'alldata': alldata})
 	
 def home(request):
