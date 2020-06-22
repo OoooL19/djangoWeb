@@ -308,56 +308,56 @@ def output(request):
 
 		alldata = Output.objects.all()
 		for i in alldata:
+			if i.price == None
+				urls = i.link
+				print(urls)
+				myDate = datetime.now()
+				formatedDate = myDate.strftime("%Y-%m-%d")
+				headers = {
+					'authority': 'www.amazon.com',
+					'pragma': 'no-cache',
+					'cache-control': 'no-cache',
+					'dnt': '1',
+					'upgrade-insecure-requests': '1',
+					'user-agent': 'Mozilla/5.0 (X11; CrOS x86_64 8172.45.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.64 Safari/537.36',
+					'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+					'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
+					"apikey": "b50b92c0-afeb-11ea-9d8a-5dc1a2b8f2ee"
+				}
+				params = (
+					("url", urls),
+					# ("location", "na"),
+					("premium", "true"),
+					("location", "us"),
+				)
 
-			urls = i.link
-			print(urls)
-			myDate = datetime.now()
-			formatedDate = myDate.strftime("%Y-%m-%d")
-			headers = {
-				'authority': 'www.amazon.com',
-				'pragma': 'no-cache',
-				'cache-control': 'no-cache',
-				'dnt': '1',
-				'upgrade-insecure-requests': '1',
-				'user-agent': 'Mozilla/5.0 (X11; CrOS x86_64 8172.45.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.64 Safari/537.36',
-				'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-				'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
-				"apikey": "b50b92c0-afeb-11ea-9d8a-5dc1a2b8f2ee"
-			}
-			params = (
-				("url", urls),
-				 # ("location", "na"),
-				("premium", "true"),
-				("location", "us"),
-		    )
-
-			# Download the page using requests
-			# print("Downloading %s"%url)
-			# r = requests.get('https://app.zenscrape.com/api/v1/get', headers=headers, params=params)
-			# r = requests.get(urls, headers=headers)
-			r = requests.get('https://app.zenscrape.com/api/v1/get', headers=headers, params=params)
-			# Simple check to check if page was blocked (Usually 503)
-			if r.status_code > 500:
-				if "To discuss automated access to Amazon data please contact" in r.text:
-					print("Page %s was blocked by Amazon. Please try using better proxies\n"%urls)
+				# Download the page using requests
+				# print("Downloading %s"%url)
+				# r = requests.get('https://app.zenscrape.com/api/v1/get', headers=headers, params=params)
+				# r = requests.get(urls, headers=headers)
+				r = requests.get('https://app.zenscrape.com/api/v1/get', headers=headers, params=params)
+				# Simple check to check if page was blocked (Usually 503)
+				if r.status_code > 500:
+					if "To discuss automated access to Amazon data please contact" in r.text:
+						print("Page %s was blocked by Amazon. Please try using better proxies\n"%urls)
+					else:
+						print("Page %s must have been blocked by Amazon as the status code was %d"%(urls,r.status_code))
+					return None
+				# Pass the HTML of the page and create
+				# print(e.extract(r.text))
+				# return e.extract(r.text)
+				print(e.extract(r.text))
+				data = e.extract(r.text)
+				data['date'] = formatedDate
+				data['link'] = urls
+				if data['rank'] == None and data['price'] == None:
+					Output.objects.filter(asin = i.asin).update(price = None, asin = data['asin'], rank = None, link = data['link'], date = data['date'])
+				elif data['price'] == None:
+					Output.objects.filter(asin = i.asin).update(price = None, asin = data['asin'], rank = re.sub("[^0-9]", "", data['rank'].replace('#','').replace(',','')), link = data['link'], date = data['date'])
+				elif data['rank'] == None:
+					Output.objects.filter(asin = i.asin).update(price = data['price'].replace('$','').replace(',',''), asin = data['asin'], rank = None, link = data['link'], date = data['date'])
 				else:
-					print("Page %s must have been blocked by Amazon as the status code was %d"%(urls,r.status_code))
-				return None
-			# Pass the HTML of the page and create
-			# print(e.extract(r.text))
-			# return e.extract(r.text)
-			print(e.extract(r.text))
-			data = e.extract(r.text)
-			data['date'] = formatedDate
-			data['link'] = urls
-			if data['rank'] == None and data['price'] == None:
-				Output.objects.filter(asin = i.asin).update(price = None, asin = data['asin'], rank = None, link = data['link'], date = data['date'])
-			elif data['price'] == None:
-				Output.objects.filter(asin = i.asin).update(price = None, asin = data['asin'], rank = re.sub("[^0-9]", "", data['rank'].replace('#','').replace(',','')), link = data['link'], date = data['date'])
-			elif data['rank'] == None:
-				Output.objects.filter(asin = i.asin).update(price = data['price'].replace('$','').replace(',',''), asin = data['asin'], rank = None, link = data['link'], date = data['date'])
-			else:
-				Output.objects.filter(asin = i.asin).update(price = data['price'].replace('$','').replace(',',''), asin = data['asin'], rank = re.sub("[^0-9]", "", data['rank'].replace('#','').replace(',','')), link = data['link'], date = data['date'])
+					Output.objects.filter(asin = i.asin).update(price = data['price'].replace('$','').replace(',',''), asin = data['asin'], rank = re.sub("[^0-9]", "", data['rank'].replace('#','').replace(',','')), link = data['link'], date = data['date'])
 		return render(request, 'polls/base.html', {'alldata': alldata})
 	
 	
