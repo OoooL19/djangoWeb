@@ -25,7 +25,7 @@ SECRET_KEY = 'k2@iuqnr#i7wu963l83*@sby7fb@0@!!)xb_)50y0(c^zjfk7+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['161.35.104.97', 'amazonbrownbox.com', 'www.amazonbrownbox.com']
+ALLOWED_HOSTS = ['161.35.104.97']
 
 
 # Application definition
